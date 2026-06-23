@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Frozen Product Seasonal Sales</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      color: #004e92;
+      margin-top: 40px;
+      animation: fadeIn 2s ease-in-out;
+      z-index: 1;
+    }
+
+    .season-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin: 40px;
+      width: 85%;
+      z-index: 1;
+    }
+
+    .card {
+      background: #ffffffee;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: slideInUp 1s ease-in-out;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+    }
+
+    .card img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin-bottom: 15px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .card img:hover {
+      transform: scale(1.05) rotate(4deg);
+    }
+
+    .season {
+      font-size: 26px;
+      color: #003566;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .sales {
+      font-size: 22px;
+      color: #0077b6;
+      font-weight: 600;
+    }
+
+    .desc {
+      font-size: 16px;
+      color: #333;
+      margin-top: 10px;
+    }
+
+    .message-box {
+      position: fixed;
+      bottom: 30px;
+      background: #ffffffdd;
+      color: #023e8a;
+      padding: 15px 25px;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      font-size: 18px;
+      z-index: 1000;
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .home-btn {
+      background: #0077b6;
+      color: white;
+      padding: 10px 25px;
+      border-radius: 10px;
+      text-decoration: none;
+      margin-bottom: 30px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+      z-index: 1;
+    }
+
+    .home-btn:hover {
+      background: #023e8a;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .card img {
+        width: 130px;
+        height: 130px;
+      }
+
+      h1 {
+        font-size: 24px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="snow-canvas"></canvas>
+
+  <h1>Seasonal Sales for Frozen Products</h1>
+
+  <div class="season-container">
+    <div class="card" onclick="showMessage('❄️ Winter: People crave frozen desserts and warm dishes like soups!')">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx022h4LwlGWTmBdO5WqBAzmK9HkPb6L0O7A&s" alt="Winter">
+      <div class="season">Winter</div>
+      <div class="sales">₹80,000</div>
+      <div class="desc">Frozen meats, pies, and hearty soups top sales in this cozy season.</div>
+    </div>
+    <div class="card" onclick="showMessage('🌸 Spring: Freshness blooms! Frozen fruits and veggies dominate.')">
+      <img src="https://i.pinimg.com/736x/9b/7e/dd/9b7eddc17cd99db6ee493f80ee94a8c4.jpg" alt="Spring">
+      <div class="season">Spring</div>
+      <div class="sales">₹60,000</div>
+      <div class="desc">Smoothies and colorful frozen fruits are customer favorites during spring.</div>
+    </div>
+    <div class="card" onclick="showMessage('☀️ Summer: Ice creams and cold drinks soar in demand!')">
+      <img src="sum.jpeg" alt="Summer">
+      <div class="season">Summer</div>
+      <div class="sales">₹95,000</div>
+      <div class="desc">Frozen drinks, popsicles, and ice creams fly off the shelves in the heat!</div>
+    </div>
+    <div class="card" onclick="showMessage('🍂 Autumn: Time for comfort food like frozen pies and baked goodies!')">
+      <img src="aut.jpeg" alt="Autumn">
+      <div class="season">Autumn</div>
+      <div class="sales">₹70,000</div>
+      <div class="desc">Pumpkin-flavored items and frozen baked goods rule the cozy season.</div>
+    </div>
+  </div>
+
+  <h2 style="color: #023e8a; margin-bottom: 25px; z-index:1;">Total Sales: ₹3,05,000</h2>
+  <a href="Product.html" class="home-btn">GO to Products</a>
+
+  <div id="message" class="message-box"></div>
+
+  <script>
+    function showMessage(message) {
+      const msgBox = document.getElementById("message");
+      msgBox.innerText = message;
+      msgBox.style.display = "block";
+      setTimeout(() => {
+        msgBox.style.display = "none";
+      }, 3000);
+    }
+
+    // Snowfall using Canvas
+    const canvas = document.getElementById("snow-canvas");
+    const ctx = canvas.getContext("2d");
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const snowflakes = [];
+
+    function createSnowflakes() {
+      for (let i = 0; i < 100; i++) {
+        snowflakes.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 4 + 1,
+          speedY: Math.random() * 1.5 + 0.5,
+          speedX: Math.random() * 0.5 - 0.25
+        });
+      }
+    }
+
+    function drawSnowflakes() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      for (let flake of snowflakes) {
+        ctx.moveTo(flake.x, flake.y);
+        ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+      }
+      ctx.fill();
+      moveSnowflakes();
+    }
+
+    function moveSnowflakes() {
+      for (let flake of snowflakes) {
+        flake.y += flake.speedY;
+        flake.x += flake.speedX;
+
+        if (flake.y > height) {
+          flake.y = 0;
+          flake.x = Math.random() * width;
+        }
+      }
+    }
+
+    function update() {
+      drawSnowflakes();
+      requestAnimationFrame(update);
+    }
+
+    window.addEventListener("resize", () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    });
+
+    createSnowflakes();
+    update();
+  </script>
+</body>
+</html>

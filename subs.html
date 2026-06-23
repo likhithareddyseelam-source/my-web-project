@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Frozen Subscriptions</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(145deg, purple, #bde9f9);
+      color: greens;
+      overflow-x: hidden;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+
+    body.dark-mode {
+      background: pink;
+      color: green;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 36px;
+      text-shadow: 2px 2px #a0e9f7;
+    }
+
+    .toggle-btn {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      background: purple;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .plans {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    .card {
+      width: 280px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: floatCard 4s ease-in-out infinite;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 12px #9de3f0;
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 26px;
+      margin: 10px 0;
+    }
+
+    .features {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+
+    .features li {
+      margin: 8px 0;
+    }
+
+    .subscribe-btn {
+      background: linear-gradient(to right, #00d2ff, #3a47d5);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .subscribe-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .subscribe-btn::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: skewX(-30deg);
+      transition: left 0.5s;
+    }
+
+    .subscribe-btn:hover::after {
+      left: 125%;
+    }
+
+    /* Modal Popup */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      width: 300px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .modal-content h2 {
+      margin-bottom: 15px;
+    }
+
+    .modal-content input {
+      padding: 10px;
+      width: 90%;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+	  .home-btn {
+      display: inline-block;
+      margin: 20px 10px;
+      padding: 14px 40px;
+      font-size: 18px;
+      background-color: #fff;
+      color: #d63384;
+      font-weight: bold;
+      border: 2px solid #ff69b4;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .modal-content button {
+      padding: 10px 20px;
+      background: #00778b;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* Snow animation */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: fall 10s linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10px); }
+      100% { transform: translateY(100vh); }
+    }
+
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <button class="toggle-btn" onclick="toggleDarkMode()">🌓 Toggle Mode</button>
+  <h1>❄️ Frozen Subscriptions</h1>
+    <a class="home-btn" href="jyo.html">← Back to Home</a>
+
+  <div class="plans">
+    <div class="card">
+      <img src="veg.jpeg" alt="Starter">
+      <div class="title">Frost Starter</div>
+      <div class="price">₹349/mo</div>
+      <ul class="features">
+        <li>3 frozen items</li>
+        <li>Weekly delivery</li>
+        <li>Email support</li>
+      </ul>
+      <button class="subscribe-btn" onclick="openModal('Frost Starter')">Subscribe Now</button>
+    </div>
+
+    <div class="card">
+      <img src="piza.jpeg" alt="Pro">
+      <div class="title">Icy Pro</div>
+      <div class="price">₹749/mo</div>
+      <ul class="features">
+        <li>7 frozen items</li>
+        <li>Fast delivery</li>
+        <li>Priority support</li>
+      </ul>
+      <button class="subscribe-btn" onclick="openModal('Icy Pro')">Subscribe Now</button>
+    </div>
+
+    <div class="card">
+      <img src="ice.jpeg" alt="Premium">
+      <div class="title">Glacier Premium</div>
+      <div class="price">₹1099/mo</div>
+      <ul class="features">
+        <li>Unlimited frozen items</li>
+        <li>Express delivery</li>
+        <li>24/7 live chat</li>
+      </ul>
+      <button class="subscribe-btn" onclick="openModal('Glacier Premium')">Subscribe Now</button>
+	   
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2 id="modal-title">Subscribe</h2>
+	  
+      <input type="text" placeholder="Your Name" id="name">
+      <input type="email" placeholder="Your Email" id="email">
+      <button onclick="submitSubscription()">Subscribe</button>
+	 
+    </div>
+  </div>
+
+  <script>
+    let selectedPlan = "";
+
+    function openModal(plan) {
+      selectedPlan = plan;
+      document.getElementById("modal").style.display = "flex";
+      document.getElementById("modal-title").innerText = `Subscribe to ${plan}`;
+    }
+
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    function submitSubscription() {
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      if (name && email) {
+        alert(`Thank you ${name}, you've subscribed to ${selectedPlan}!`);
+        closeModal();
+      } else {
+        alert("Please fill in all fields.");
+      }
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+
+    // Snowflakes animation
+    for (let i = 0; i < 30; i++) {
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      snowflake.style.left = Math.random() * window.innerWidth + "px";
+      snowflake.style.animationDuration = (5 + Math.random() * 5) + "s";
+      snowflake.style.opacity = Math.random();
+      document.body.appendChild(snowflake);
+    }
+  </script>
+</body>
+</html>

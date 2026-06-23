@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Frozen Meats</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #3b3b98, #0f2027);
+      color: #fff;
+      min-height: 100vh;
+      padding-bottom: 100px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    header {
+      text-align: center;
+      font-size: 42px;
+      font-weight: bold;
+      padding: 40px 20px 10px;
+      color: #fff;
+      text-shadow: 2px 2px 10px #00000070;
+    }
+
+    .tagline {
+      text-align: center;
+      font-size: 20px;
+      color: #e3f7f7;
+      margin-bottom: 30px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      border: 2px solid #fff;
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .card button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background: #fff;
+      color: #c0392b;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .card button:hover {
+      background-color: #ffe6e6;
+    }
+
+    .card.out-of-stock::after {
+      content: "Out of Stock";
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #ff4d4d;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .card.out-of-stock button {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .view-cart-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #fff;
+      color: #c0392b;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .home-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: #fff;
+      color: #3b3b98;
+      padding: 10px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .cart-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      color: #000;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      display: none;
+      z-index: 999;
+    }
+
+    .cart-popup h2 {
+      margin-bottom: 15px;
+    }
+
+    .cart-popup ul {
+      list-style: none;
+      padding: 0;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .cart-popup li {
+      margin-bottom: 10px;
+    }
+
+    .cart-popup button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #c0392b;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* Snow */
+    .snow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .snowflake {
+      position: absolute;
+      color: white;
+      font-size: 1em;
+      user-select: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>🥩 Frozen Meats Market</header>
+  <div class="tagline">Chill the grill — Premium meats frozen for freshness!</div>
+
+  <a href="jyo.html" class="home-btn">← Back to Home</a>
+  <button class="view-cart-btn" onclick="showCart()">🛒 View Cart</button>
+
+  <div class="container">
+    <div class="card">
+      <img src="https://5.imimg.com/data5/SELLER/Default/2024/9/454881607/ZJ/DA/TN/84743643/frozen-breast-boneless-500x500.jpeg" alt="Chicken">
+      <h3>Chicken Breast - ₹120</h3>
+      <button onclick="addToCart('Chicken Breast', 120)">Add to Cart</button>
+    </div>
+    <div class="card">
+      <img src="https://5.imimg.com/data5/SELLER/Default/2024/12/472488568/ZL/LE/JJ/190465656/mutton-biryani-cut-500x500.jpeg" alt="Mutton">
+      <h3>Mutton Pieces - ₹250</h3>
+      <button onclick="addToCart('Mutton Pieces', 250)">Add to Cart</button>
+    </div>
+    <div class="card out-of-stock">
+      <img src="https://getfish.com.au/cdn/shop/collections/1c2bxuyn_fe393927-7a20-4d1b-a8a7-af631b2c857a.png?v=1713228358" alt="Prawns">
+      <h3>Prawns - ₹180</h3>
+      <button disabled>Out of Stock</button>
+    </div>
+    <div class="card">
+      <img src="https://media.istockphoto.com/id/141247128/photo/gilthead-on-ice.jpg?s=612x612&w=0&k=20&c=53tWpBuXf6SjA_qtknj82l3SvKxPOPgvJDrLG_sdbzk=" alt="Fish">
+      <h3>Frozen Fish - ₹90</h3>
+      <button onclick="addToCart('Frozen Fish', 90)">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div class="cart-popup" id="cartPopup">
+    <h2>Your Cart</h2>
+    <ul id="cartItems"></ul>
+    <p><strong>Total: ₹<span id="totalAmount">0</span></strong></p>
+    <button onclick="checkout()">Checkout</button>
+  </div>
+
+  <!-- Snow Effect -->
+  <div class="snow" id="snowContainer"></div>
+
+  <script>
+    // Snow effect
+    const snowContainer = document.getElementById('snowContainer');
+    for (let i = 0; i < 60; i++) {
+      const flake = document.createElement('div');
+      flake.classList.add('snowflake');
+      flake.innerHTML = '❄️';
+      flake.style.left = Math.random() * 100 + 'vw';
+      flake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      flake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+      flake.style.animationDelay = Math.random() * 5 + 's';
+      snowContainer.appendChild(flake);
+    }
+
+    // Cart logic
+    const cart = {};
+
+    function addToCart(item, price) {
+      if (!cart[item]) {
+        cart[item] = { price, quantity: 1 };
+      } else {
+        cart[item].quantity++;
+      }
+      alert(item + " added to cart!");
+    }
+
+    function showCart() {
+      const popup = document.getElementById("cartPopup");
+      const cartItems = document.getElementById("cartItems");
+      const totalAmount = document.getElementById("totalAmount");
+      cartItems.innerHTML = '';
+      let total = 0;
+
+      for (let item in cart) {
+        const li = document.createElement('li');
+        const itemData = cart[item];
+        li.textContent = `${item} - ₹${itemData.price} x ${itemData.quantity}`;
+        cartItems.appendChild(li);
+        total += itemData.price * itemData.quantity;
+      }
+
+      totalAmount.textContent = total;
+      popup.style.display = 'block';
+    }
+
+    function checkout() {
+      alert("Order placed successfully!");
+      document.getElementById("cartPopup").style.display = "none";
+      for (let key in cart) delete cart[key];
+    }
+
+    window.onclick = function(e) {
+      const popup = document.getElementById("cartPopup");
+      if (e.target === popup) popup.style.display = "none";
+    };
+  </script>
+
+</body>
+</html>
+

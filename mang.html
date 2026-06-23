@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HotelEase - Hotel Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="hm.css">
+  <link rel="stylesheet" href="hm.css">
+  </head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <span class="logo-icon">🏨</span>
+                    HotelEase
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#reservations">Reservations</a></li>
+                    <li><a href="#rooms">Rooms</a></li>
+                    <li><a href="#guests">Guests</a></li>
+                    <li><a href="#staff">Staff</a></li>
+                    <li><a href="#reports">Reports</a></li>
+                </ul>
+                <div class="user-menu">
+                    <div class="avatar">A</div>
+                    <span>Admin</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section id="dashboard">
+            <div class="dashboard">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Occupancy</h3>
+                        <div class="card-icon">🛏</div>
+                    </div>
+                    <div class="number">75%</div>
+                    <div class="occupancy-rate">
+                        <span>0%</span>
+                        <div class="progress-bar">
+                            <div class="progress"></div>
+                        </div>
+                        <span>100%</span>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Revenue Today</h3>
+                        <div class="card-icon">💰</div>
+                    </div>
+                    <div class="number">$4,250</div>
+                    <p>+12% from yesterday</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Available Rooms</h3>
+                        <div class="card-icon">🚪</div>
+                    </div>
+                    <div class="number">15</div>
+                    <p>Out of 60 total rooms</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Check-ins Today</h3>
+                        <div class="card-icon">📝</div>
+                    </div>
+                    <div class="number">12</div>
+                    <p>5 check-outs scheduled</p>
+                </div>
+            </div>
+            
+            <div class="sections">
+                <div class="card">
+                    <div class="section-title">
+                        <h2>Recent Bookings</h2>
+                        <button class="btn btn-outline">View All</button>
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Guest</th>
+                                <th>Room</th>
+                                <th>Check-in</th>
+                                <th>Check-out</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Smith</td>
+                                <td>201 - Deluxe</td>
+                                <td>Apr 5, 2025</td>
+                                <td>Apr 8, 2025</td>
+                                <td><span class="status status-checked-in">Checked In</span></td>
+                                <td><button class="btn btn-outline">Details</button></td>
+                            </tr>
+                            <tr>
+                                <td>Emily Johnson</td>
+                                <td>305 - Suite</td>
+                                <td>Apr 5, 2025</td>
+                                <td>Apr 10, 2025</td>
+                                <td><span class="status status-reserved">Reserved</span></td>
+                                <td><button class="btn btn-outline">Details</button></td>
+                            </tr>
+                            <tr>
+                                <td>Robert Davis</td>
+                                <td>110 - Standard</td>
+                                <td>Apr 3, 2025</td>
+                                <td>Apr 5, 2025</td>
+                                <td><span class="status status-checkout">Check Out</span></td>
+                                <td><button class="btn btn-outline">Details</button></td>
+                            </tr>
+                            <tr>
+                                <td>Sarah Wilson</td>
+                                <td>402 - Deluxe</td>
+                                <td>Apr 4, 2025</td>
+                                <td>Apr 9, 2025</td>
+                                <td><span class="status status-checked-in">Checked In</span></td>
+                                <td><button class="btn btn-outline">Details</button></td>
+                            </tr>
+                            <tr>
+                                <td>Michael Brown</td>
+                                <td>210 - Standard</td>
+                                <td>Apr 6, 2025</td>
+                                <td>Apr 8, 2025</td>
+                                <td><span class="status status-reserved">Reserved</span></td>
+                                <td><button class="btn btn-outline">Details</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="upcoming-reservations">
+                    <div class="section-title">
+                        <h2>Today's Arrivals</h2>
+                        <button class="btn btn-outline">View All</button>
+                    </div>
+                    
+                    <div class="reservation-item">
+                        <div class="avatar">E</div>
+                        <div class="reservation-info">
+                            <div class="reservation-name">Emily Johnson</div>
+                            <div class="reservation-dates">305 - Suite</div>
+                        </div>
+                        <button class="btn btn-primary">Check In</button>
+                    </div>
+                    
+                    <div class="reservation-item">
+                        <div class="avatar">M</div>
+                        <div class="reservation-info">
+                            <div class="reservation-name">Michael Brown</div>
+                            <div class="reservation-dates">210 - Standard</div>
+                        </div>
+                        <button class="btn btn-primary">Check In</button>
+                    </div>
+                    
+                    <div class="reservation-item">
+                        <div class="avatar">L</div>
+                        <div class="reservation-info">
+                            <div class="reservation-name">Lisa Taylor</div>
+                            <div class="reservation-dates">307 - Deluxe</div>
+                        </div>
+                        <button class="btn btn-primary">Check In</button>
+                    </div>
+                    
+                    <div class="section-title" style="margin-top: 2rem;">
+                        <h2>Today's Departures</h2>
+                        <button class="btn btn-outline">View All</button>
+                    </div>
+                    
+                    <div class="reservation-item">
+                        <div class="avatar">R</div>
+                        <div class="reservation-info">
+                            <div class="reservation-name">Robert Davis</div>
+                            <div class="reservation-dates">110 - Standard</div>
+                        </div>
+                        <button class="btn btn-primary">Check Out</button>
+                    </div>
+                    
+                    <div class="reservation-item">
+                        <div class="avatar">J</div>
+                        <div class="reservation-info">
+                            <div class="reservation-name">James Wilson</div>
+                            <div class="reservation-dates">205 - Deluxe</div>
+                        </div>
+                        <button class="btn btn-primary">Check Out</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">🏨 HotelEase</div>
+                    <p>Simplifying hotel management with powerful tools and intuitive interfaces.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div>
+                        <h3>Features</h3>
+                        <ul>
+                            <li><a href="#">Reservations</a></li>
+                            <li><a href="#">Room Management</a></li>
+                            <li><a href="#">Guest Profiles</a></li>
+                            <li><a href="#">Staff Management</a></li>
+                            <li><a href="#">Reporting</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Documentation</a></li>
+                            <li><a href="#">API</a></li>
+                            <li><a href="#">Integration</a></li>
+                            <li><a href="#">Pricing</a></li>
+                            <li><a href="#">Support</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 HotelEase. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+  
+
+  <!-- Existing HTML content remains the same until closing footer -->
+
+  <div class="floating-action">+ Add Reservation</div>
+</body>
+</html>

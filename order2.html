@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Summary</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fad0c4, #ffdde1);
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .card {
+      background-color: white;
+      padding: 30px 50px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      animation: fadeIn 1.5s ease;
+      position: relative;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card h1 {
+      color: #e63946;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-weight: bold;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .greeting {
+      font-size: 16px;
+      color: #6c757d;
+      margin-top: 10px;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(to right, #ff6a00, #ee0979);
+      color: white;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Order Summary</h1>
+    <p id="summary-text">Thank you for your order!</p>
+    <p>*** Your order has been placed ***</p>
+    <div class="greeting" id="greeting-msg">Have a wonderful day! 😊</div>
+    <button class="btn" onclick="goHome()">Back to Home</button>
+  </div>
+
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script>
+    // Personalized greeting
+    window.onload = () => {
+      const name = prompt("Enter your name:");
+      if (name) {
+        document.getElementById("summary-text").textContent = `Thank you, ${name}, for your order!`;
+        document.getElementById("greeting-msg").textContent = `Have a fantastic day, ${name}! 🎉`;
+      }
+
+      // Confetti animation
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
+    };
+
+    // Go to homepage (update filename if needed)
+    function goHome() {
+      window.location.href = "jyo.html"; // Change to your home page file name if it's different
+    }
+  </script>
+</body>
+</html>

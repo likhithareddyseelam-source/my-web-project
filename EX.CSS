@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    p { color: green; }            /* Element selector */
+    .highlight { font-weight: bold; }  /* Class selector */
+    #main { background-color: lightblue; } /* ID selector */
+  </style>
+</head>
+<body>
+  <p>This is a paragraph using element selector.</p>
+  <p class="highlight">This is a highlighted paragraph.</p>
+  <p id="main">This paragraph uses an ID selector.</p>
+</body>
+</html>

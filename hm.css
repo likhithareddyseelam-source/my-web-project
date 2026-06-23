@@ -1,0 +1,324 @@
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --secondary: #3b82f6;
+      --accent: #60a5fa;
+      --light: #f0f9ff;
+      --dark: #1e293b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #dbeafe, #e0f2fe);
+      color: var(--dark);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: -150px;
+      left: -150px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(59,130,246,0.3) 0%, transparent 70%);
+      z-index: 0;
+      animation: float 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(30px, 20px); }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem 0;
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-icon {
+      margin-right: 12px;
+      font-size: 2rem;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      margin-left: 2rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+    }
+
+    .user-menu .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background-color: var(--accent);
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 2.5rem 0;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      padding: 1.8rem;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+    }
+
+    .card-icon {
+      font-size: 1.6rem;
+      color: var(--primary);
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .number {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .occupancy-rate {
+      display: flex;
+      align-items: center;
+      margin-top: 0.6rem;
+    }
+
+    .progress-bar {
+      flex-grow: 1;
+      height: 10px;
+      background-color: #e2e8f0;
+      border-radius: 5px;
+      margin: 0 10px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background-color: var(--success);
+      width: 75%;
+    }
+
+    .sections {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    thead {
+      background-color: #eff6ff;
+    }
+
+    th, td {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid #dbeafe;
+      text-align: left;
+    }
+
+    tr:hover {
+      background-color: #f8fafc;
+    }
+
+    .status {
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .status-checked-in {
+      background-color: #dcfce7;
+      color: #065f46;
+    }
+
+    .status-reserved {
+      background-color: #fff7ed;
+      color: #92400e;
+    }
+
+    .status-checkout {
+      background-color: #eff6ff;
+      color: #1e40af;
+    }
+
+    .btn {
+      padding: 0.45rem 1rem;
+      border-radius: 6px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #1e40af;
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .upcoming-reservations {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+      padding: 1.5rem;
+    }
+
+    .reservation-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .reservation-info {
+      flex-grow: 1;
+      margin-left: 1rem;
+    }
+
+    .reservation-name {
+      font-weight: bold;
+      margin-bottom: 0.2rem;
+    }
+
+    .reservation-dates {
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    .floating-action {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: var(--success);
+      color: white;
+      padding: 1rem 1.25rem;
+      border-radius: 50px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      z-index: 10;
+    }
+
+    .floating-action:hover {
+      background-color: #059669;
+    }
+
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .sections {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript Functions and Events Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    input, button {
+      margin: 10px 0;
+      padding: 8px;
+    }
+    #output {
+      margin-top: 15px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+<h2>JavaScript Functions and Events</h2>
+
+<!-- Click Event -->
+<button onclick="sayHello()">Click Me</button><br>
+
+<!-- Mouseover Event -->
+<div onmouseover="changeColor()" onmouseout="resetColor()" style="width: 200px; height: 50px; background-color: lightblue; text-align: center; line-height: 50px;">
+  Hover over me
+</div><br>
+
+<!-- Input Event -->
+<label for="name">Enter your name:</label>
+<input type="text" id="name" onkeyup="updateName()"><br>
+
+<!-- Submit Event -->
+<form onsubmit="submitForm(event)">
+  <label for="email">Email:</label>
+  <input type="email" id="email" required>
+  <button type="submit">Submit</button>
+</form>
+
+<p id="output"></p>
+
+<script>
+  // Function for Click Event
+  function sayHello() {
+    document.getElementById("output").innerText = "Hello! You clicked the button.";
+  }
+
+  // Functions for Mouseover and Mouseout Events
+  function changeColor() {
+    event.target.style.backgroundColor = "orange";
+    event.target.innerText = "Mouse Over!";
+  }
+
+  function resetColor() {
+    event.target.style.backgroundColor = "lightblue";
+    event.target.innerText = "Hover over me";
+  }
+
+  // Function for Input Keyup Event
+  function updateName() {
+    let name = document.getElementById("name").value;
+    document.getElementById("output").innerText = "Welcome, " + name;
+  }
+
+  // Function for Form Submit Event
+  function submitForm(event) {
+    event.preventDefault(); // Prevent page reload
+    let email = document.getElementById("email").value;
+    document.getElementById("output").innerText = "Form submitted! Email: " + email;
+  }
+</script>
+
+</body>
+</html>

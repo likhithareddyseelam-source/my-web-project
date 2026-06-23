@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Discounted Frozen Items</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #d4f1f9, #ffffff);
+      overflow-x: hidden;
+      position: relative;
+      height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      color: #015c8e;
+      margin-top: 30px;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 5px #90e0ef;
+      z-index: 1;
+      position: relative;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      padding: 40px;
+      max-width: 1200px;
+      margin: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      padding: 20px;
+      animation: fadeInUp 1s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 20px rgba(0,0,0,0.3);
+    }
+
+    .card img {
+      width: 100%;
+      height: 160px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin: 15px 0 5px;
+      color: #014f86;
+    }
+
+    .card p {
+      color: green;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    .back-home {
+      display: block;
+      margin: 20px auto 60px;
+      padding: 10px 20px;
+      text-align: center;
+      background-color: #023e8a;
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: background 0.3s;
+      z-index: 1;
+      position: relative;
+    }
+
+    .back-home:hover {
+      background-color: #0077b6;
+    }
+
+    /* Snowflake styles */
+    .snowflake {
+      color: #fff;
+      font-size: 1.5em;
+      position: fixed;
+      top: -2em;
+      z-index: 0;
+      animation-name: fall;
+      animation-timing-function: linear;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>❄️ Discounted Frozen Products ❄️</h1>
+
+  <div class="container">
+    <div class="card">
+      <img src="ice.jpeg" alt="Ice Cream">
+      <h3>Chocolate Ice Cream</h3>
+      <p>Now ₹99 (30% Off)</p>
+    </div>
+    <div class="card">
+      <img src="https://www.cropsfrozenfoods.com/public/Fruit/_600xAUTO_fit_center-center_85_none_ns/Product-Image-Frozen-Exotic-Fruit-mix-5117-HR-15.jpg" alt="Frozen Fruits">
+      <h3>Mixed Frozen Fruits</h3>
+      <p>Now ₹149 (25% Off)</p>
+    </div>
+    <div class="card">
+      <img src="https://www.dinneratthezoo.com/wp-content/uploads/2018/05/mango-smoothie-2.jpg" alt="Frozen Smoothie">
+      <h3>Mango Smoothie Pack</h3>
+      <p>Now ₹89 (35% Off)</p>
+    </div>
+    <div class="card">
+      <img src="frmeat.jpeg" alt="Frozen Meat">
+      <h3>Chicken Breast</h3>
+      <p>Now ₹179 (20% Off)</p>
+    </div>
+    
+  </div>
+
+  <a class="back-home" href="jyo.html">⏪ Back to Home</a>
+
+  <!-- Snowflake Animation Script -->
+  <script>
+    const createSnowflake = () => {
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      snowflake.innerText = "❄";
+      snowflake.style.left = Math.random() * window.innerWidth + "px";
+      snowflake.style.animationDuration = 5 + Math.random() * 5 + "s";
+      snowflake.style.fontSize = 10 + Math.random() * 20 + "px";
+      document.body.appendChild(snowflake);
+
+      setTimeout(() => {
+        snowflake.remove();
+      }, 10000);
+    };
+
+    setInterval(createSnowflake, 200);
+  </script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frozen Products Store</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #e0f7ff, #ffffff);
+      transition: background 0.4s, color 0.4s;
+    }
+    body.dark {
+      background: linear-gradient(to bottom right, #1e1e2f, #2b2b3d);
+      color: #f0f0f0;
+    }
+    .container { max-width: 1200px; margin: auto; padding: 20px; }
+    .header { text-align: center; padding: 20px; }
+    .toggle-btn, .view-cart-btn, .home-btn {
+      position: fixed; top: 20px;
+      background: #333; color: white; border: none;
+      padding: 10px 20px; border-radius: 20px;
+      cursor: pointer; z-index: 2;
+    }
+	    .home-btn {
+      display: inline-block;
+      margin: 20px 10px;
+      padding: 14px 40px;
+      font-size: 18px;
+      background-color: #fff;
+      color: #d63384;
+      font-weight: bold;
+      border: 2px solid #ff69b4;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    .toggle-btn { right: 20px; }
+    .view-cart-btn { right: 160px; }
+    .home-btn { left: 20px; }
+    .product-list {
+      display: flex; flex-wrap: wrap; gap: 20px;
+      justify-content: center;
+    }
+    .product-card {
+      background: #f0f8ff;
+      border-radius: 10px;
+      padding: 20px;
+      width: 260px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    body.dark .product-card { background: #444; color: white; }
+    .product-card h3 { margin: 10px 0; }
+    .btn { margin: 10px 5px; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; }
+    .cart-btn { background-color: #007acc; color: white; }
+    .wishlist-btn { background-color: transparent; border: none; font-size: 24px; color: red; cursor: pointer; position: absolute; top: 10px; right: 10px; }
+    .wishlist-btn.active { color: pink; }
+    form {
+      background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-top: 30px;
+    }
+    body.dark form { background: #333; color: white; }
+    input, select {
+      padding: 10px; margin: 10px 0; width: 100%; border-radius: 6px;
+      border: 1px solid #ccc; font-size: 16px;
+    }
+    table {
+      width: 100%; border-collapse: collapse; margin-top: 20px;
+    }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+    th { background: #f0f0f0; }
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      z-index: 0;
+      color: white;
+      user-select: none;
+      pointer-events: none;
+      font-size: 1em;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      to { transform: translateY(100vh); }
+    }
+  </style>
+</head>
+<body>
+  
+  <a class="home-btn" href="jyo.html">← Back to Home</a>
+  <button class="view-cart-btn" onclick="viewCart()">🛒 View Cart</button>
+  <button class="toggle-btn" onclick="toggleDarkMode()">🌙 Toggle Mode</button>
+  <div class="container">
+    <div class="header">
+      <h1>Frozen Product Store</h1>
+    </div>
+
+    <div class="product-list" id="productList"></div>
+
+    <form id="orderForm">
+      <h2>Place Your Order</h2>
+      <select id="orderItem" required></select>
+      <input type="number" id="quantity" placeholder="Quantity" min="1" required>
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="text" id="address" placeholder="Delivery Address" required>
+      <input type="tel" id="phone" placeholder="Phone Number" pattern="[0-9]{10}" required>
+      <button type="submit" class="btn cart-btn">Confirm Order</button>
+    </form>
+
+    <div id="summary">
+      <h2>Order Summary</h2>
+      <table id="summaryTable">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const products = [
+      { name: 'Frozen Berries', price: 180 },
+      { name: 'Choco Fudge', price: 200 },
+      { name: 'Vanilla Dream', price: 150 },
+      { name: 'Signature Latte', price: 180 },
+      { name: 'Cold Brew', price: 160 },
+      { name: 'Strawberry', price: 160 },
+      { name: 'Seasonal Mocha', price: 200 },
+      { name: 'Chai Latte', price: 150 },
+    ];
+
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+    const productList = document.getElementById("productList");
+    const orderItemSelect = document.getElementById("orderItem");
+
+    function renderProducts() {
+      productList.innerHTML = '';
+      orderItemSelect.innerHTML = '';
+
+      products.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+
+        const heart = document.createElement('button');
+        heart.innerHTML = wishlist.includes(product.name) ? '❤️' : '🤍';
+        heart.className = 'wishlist-btn';
+        if (wishlist.includes(product.name)) heart.classList.add('active');
+        heart.onclick = () => {
+          toggleWishlist(product.name);
+          heart.innerHTML = wishlist.includes(product.name) ? '❤️' : '🤍';
+        };
+
+        const title = document.createElement('h3');
+        title.textContent = product.name;
+        const price = document.createElement('p');
+        price.textContent = `₹${product.price}`;
+
+        const addBtn = document.createElement('button');
+        addBtn.textContent = 'Add to Cart';
+        addBtn.className = 'btn cart-btn';
+        addBtn.onclick = () => {
+          cart.push(product);
+          localStorage.setItem("cart", JSON.stringify(cart));
+          alert(`✅ ${product.name} added to cart!`);
+        };
+
+        card.appendChild(heart);
+        card.appendChild(title);
+        card.appendChild(price);
+        card.appendChild(addBtn);
+        productList.appendChild(card);
+
+        const option = document.createElement('option');
+        option.value = product.name;
+        option.textContent = `${product.name} - ₹${product.price}`;
+        option.setAttribute('data-price', product.price);
+        orderItemSelect.appendChild(option);
+      });
+    }
+
+    function toggleWishlist(name) {
+      const index = wishlist.indexOf(name);
+      if (index > -1) wishlist.splice(index, 1);
+      else wishlist.push(name);
+      localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    function viewCart() {
+      if (!cart.length) return alert("🛒 Your cart is empty!");
+      let message = "🛒 Cart Items:\n";
+      cart.forEach((item, i) => message += `${i+1}. ${item.name} - ₹${item.price}\n`);
+      alert(message);
+    }
+
+    const orderForm = document.getElementById("orderForm");
+    const summaryBody = document.querySelector("#summaryTable tbody");
+
+    orderForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const item = orderItemSelect.value;
+      const price = parseFloat(orderItemSelect.selectedOptions[0].dataset.price);
+      const quantity = parseInt(document.getElementById("quantity").value);
+      const name = document.getElementById("name").value;
+      const address = document.getElementById("address").value;
+      const phone = document.getElementById("phone").value;
+      const total = price * quantity;
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${item}</td>
+        <td>₹${price}</td>
+        <td>${quantity}</td>
+        <td>₹${total}</td>
+        <td>${name}</td>
+        <td>${address}</td>
+        <td>${phone}</td>`;
+      summaryBody.appendChild(row);
+
+      alert(`🎉 Order confirmed for ${item} x${quantity} by ${name}!`);
+      orderForm.reset();
+    });
+
+    for (let i = 0; i < 40; i++) {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.innerText = '❄';
+      snowflake.style.left = Math.random() * 100 + 'vw';
+      snowflake.style.animationDuration = 5 + Math.random() * 10 + 's';
+      snowflake.style.fontSize = 12 + Math.random() * 24 + 'px';
+      document.body.appendChild(snowflake);
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>

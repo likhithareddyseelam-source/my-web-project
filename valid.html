@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Frozen Product Registration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(to bottom, #a1c4fd, #c2e9fb);
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+	       background: url('b1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+        
+    }
+
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      background: white;
+      border-radius: 50%;
+      width: 8px;
+      height: 8px;
+      animation: fall linear infinite;
+      opacity: 0.7;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    .form-container {
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.85);
+      width: 400px;
+      margin: 70px auto;
+      padding: 35px 30px;
+      border-radius: 25px;
+      box-shadow: 0 0 30px rgba(0, 153, 255, 0.4);
+      backdrop-filter: blur(6px);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #0077cc;
+      text-shadow: 2px 2px 6px rgba(255,255,255,0.6);
+      font-size: 28px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #0652dd;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 18px;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      background-color: #f0faff;
+      box-shadow: inset 0 0 6px rgba(0, 153, 255, 0.2);
+      transition: box-shadow 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 10px #00ccff;
+    }
+
+    .checkbox-container {
+      margin-bottom: 18px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 6px;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.4s;
+    }
+
+    input[type="submit"]:hover {
+      background: linear-gradient(to right, #0072ff, #00c6ff);
+      transform: scale(1.04);
+    }
+
+    .back-home {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      background: linear-gradient(to right, #74ebd5, #acb6e5);
+      padding: 10px 20px;
+      border-radius: 12px;
+      color: #003366;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .back-home:hover {
+      background: linear-gradient(to right, #acb6e5, #74ebd5);
+      transform: scale(1.05);
+    }
+  </style>
+
+  <script>
+    function validateForm() {
+      var un = document.registration.uname.value.trim();
+      var password = document.registration.password.value.trim();
+      var mobileno = document.registration.mobile.value.trim();
+      var mail = document.registration.email.value.trim();
+
+      var usernamePattern = /^[a-zA-Z0-9_\s]+$/;
+      var mobilePattern = /^[0-9]{10}$/;
+      var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      var passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+      if (un === "") {
+        alert("❄️ Please enter your username");
+        document.registration.uname.focus();
+        return false;
+      }
+      if (un.length < 6) {
+        alert("❄️ Username must be at least 6 characters");
+        document.registration.uname.focus();
+        return false;
+      }
+      if (!usernamePattern.test(un)) {
+        alert("❄️ Username can only contain letters, numbers, and underscores");
+        document.registration.uname.focus();
+        return false;
+      }
+
+      if (password === "") {
+        alert("❄️ Please enter your password");
+        document.registration.password.focus();
+        return false;
+      }
+      if (!password.match(passwordPattern)) {
+        alert("❄️ Password must be at least 8 characters and include uppercase, lowercase, number, and special character");
+        document.registration.password.focus();
+        return false;
+      }
+
+      if (mobileno === "") {
+        alert("❄️ Please enter your mobile number");
+        document.registration.mobile.focus();
+        return false;
+      }
+      if (!mobilePattern.test(mobileno)) {
+        alert("❄️ Mobile number must be exactly 10 digits");
+        document.registration.mobile.focus();
+        return false;
+      }
+
+      if (!emailPattern.test(mail)) {
+        alert("❄️ Please enter a valid email address");
+        document.registration.email.focus();
+        return false;
+      }
+
+      alert("🎉 Registration Successful! Welcome to the Frozen Product World!");
+      return false; // prevent reload
+    }
+
+    function togglePassword() {
+      var passField = document.getElementById("password");
+      passField.type = passField.type === "password" ? "text" : "password";
+    }
+
+    // Snowflake generator
+    window.onload = function () {
+      for (let i = 0; i < 60; i++) {
+        const snow = document.createElement("div");
+        snow.className = "snowflake";
+        snow.style.left = Math.random() * window.innerWidth + "px";
+        snow.style.animationDuration = 3 + Math.random() * 5 + "s";
+        snow.style.width = snow.style.height = 4 + Math.random() * 5 + "px";
+        document.body.appendChild(snow);
+      }
+    };
+  </script>
+</head>
+
+<body>
+  <div class="form-container">
+    <h2>Frozen Product Registration</h2>
+    <form name="registration" onsubmit="return validateForm();">
+      <label for="uname">Your Name:</label>
+      <input type="text" name="uname" id="uname" placeholder="e.g. Ice Queen Elsa">
+
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" placeholder="Strong password here">
+      <div class="checkbox-container">
+        <input type="checkbox" onclick="togglePassword()"> Show Password
+      </div>
+
+      <label for="mobile">Mobile Number:</label>
+      <input type="tel" name="mobile" id="mobile" placeholder="10-digit number">
+
+      <label for="email">Email Address:</label>
+      <input type="email" name="email" id="email" placeholder="e.g. icequeen@frozen.com">
+
+      <input type="submit" value="❄️ Register Now">
+    </form>
+
+    <a href="jyo.html" class="back-home">🏠 Back to Home</a>
+  </div>
+</body>
+</html>
